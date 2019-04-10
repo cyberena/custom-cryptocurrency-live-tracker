@@ -1,0 +1,88 @@
+.App {
+  /* text-align: center; */
+  background-color:black;
+}
+
+.App-logo {
+  /* animation: App-logo-spin infinite 20s linear; */
+  /* height: 40vmin; */
+  /* border:1px solid red; */
+
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #000000;
+  min-height: 100vh;
+  /* display: flex; */
+  flex-direction: column;
+  /* border:1px solid red; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.col-8 {
+  background-color:black;
+}
+
+#ticker-app .col-4 {
+  padding-right: 0;
+}
+
+body#ticker-app {
+  color: white;
+  background-color: black;
+}
+
+.normal{
+  font-size: 40px;
+  color: #fff;
+  text-align: left;
+  text-shadow: 0 0 5px #fff, 0 0 5px #fff, 0 0 30px #fff, 0 0 5px #fff, 0 0 50px #e60073, 0 0 5px #e60073, 0 0 5px #e60073;
+}
+
+.glow {
+  font-size: 40px;
+  color: #fff;
+  text-align: left;
+  -webkit-animation: glow 1s ease-in-out  alternate;
+  -moz-animation: glow 1s ease-in-out  alternate;
+  animation: glow 1s ease-in-out  alternate;
+  animation-iteration-count: 1;
+}
+
+@-webkit-keyframes glow {
+
+	0%   {    text-shadow: 0 0 0px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+}
+    70%  {    text-shadow: 0 0 15px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+}
+    100% {    text-shadow: 0 0 5px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+}
+}
+
+.navUser {
+  color:orange !important;
+  padding-left:100px;
+  padding-right:20px;
+}
+
+.navLogout {
+  padding-left:100px;
+}
+

@@ -1,0 +1,6 @@
+{
+  "jwtPrivateKey": "unsecureKey",
+  "db": "mongodb://localhost/codeboss911",
+  "port": "3900",
+  "requiresAuth": false
+}
