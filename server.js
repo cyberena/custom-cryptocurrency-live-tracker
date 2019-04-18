@@ -21,48 +21,30 @@ server.listen(port, () =>
 
 
 io.on('connection', (client) => {
-  //cleanup: these two subscriber timer functions can be refactored
-  client.on('subscribeToTimerAnon', async () => {
-    let tickers = ["xrp","eos","vet","eth","ltc"];
+  let socket = "";
+  client.on('subscribeToTimer', async (userID) => {
+    socket = setInterval( async () => {
+        //get tickers list from db
+      let tickers = await Ticker.find({linkedID: userID});
+      console.log(tickers);
 
-      setInterval( async () => {
-        //get latest tickers from binance
-        tickers.map(async t => {
-          let result = await fetch("https://api.binance.com/api/v1/ticker/price?symbol=" + t.toUpperCase() + "BTC");
-          result = await result.json();
-          console.log(result);
-
-            newTicker = {
-              ticker: result.symbol,
-              price: result.price
-            }
-            newTicker.ticker = newTicker.ticker.replace("BTC", "");
-            client.emit('tickerUpdate', { newTicker: newTicker });
-        });
-      }, 10000);
+      //get latest tickers from binance
+      tickers.map(async t => {
+        let result = await fetch("https://api.binance.com/api/v1/ticker/price?symbol=" + t.ticker.toUpperCase() + "BTC");
+        result = await result.json();
+        console.log(result);
+        if ((t.price == 0) || (t.price != result.price)) {
+          let newTicker = await Ticker.findOneAndUpdate({linkedID: userID, ticker: t.ticker}, {price: result.price}, {new: true});
+          //update db and send it to the front end
+          client.emit('tickerUpdate', { newTicker: newTicker });
+        }
+      });
+    }, 5000);
   });
 
-
-  //cleanup: these two subscriber timer functions can be refactored
-  client.on('subscribeToTimer', async (userID) => {
-    if (userID != null) {
-      setInterval( async () => {
-          //get tickers list from db
-        let tickers = await Ticker.find({linkedID: userID});
-
-        //get latest tickers from binance
-        tickers.map(async t => {
-          let result = await fetch("https://api.binance.com/api/v1/ticker/price?symbol=" + t.ticker.toUpperCase() + "BTC");
-          result = await result.json();
-          console.log(result);
-          if ((t.price == 0) || (t.price != result.price)) {
-            let newTicker = await Ticker.findOneAndUpdate({linkedID: userID, ticker: t.ticker}, {price: result.price}, {new: true});
-            //update db and send it to the front end
-            client.emit('tickerUpdate', { newTicker: newTicker });
-          }
-        });
-      }, 5000);
-    }
+  client.on('disconnect', function () {
+    // dispose tail file listener
+    clearInterval(socket);
   });
 });
 

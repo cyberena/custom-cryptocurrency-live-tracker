@@ -13,21 +13,19 @@ import Tickers from "./components/tickers";
 import auth from "./services/authServices";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
+import { connect } from "react-redux";
+
 
 class App extends Component {
-  state = {
-    user: ""
-  };
-
   componentDidMount = () => {
     const user = auth.getCurrentUser();
-    this.setState({ user });
+    this.props.dispatch({ type: "SET_USER", user: user });
   };
 
 
 
   render() {
-    const { user } = this.state;
+    const { user } = this.props;
     return (
       <React.Fragment>
         <ToastContainer />
@@ -63,4 +61,10 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    user: state.userReducer.user
+  };
+}
+
+export default connect(mapStateToProps)(App);

@@ -3,76 +3,44 @@ import subscribeToTimer, { subscribeToTimerAnon } from "../services/subscription
 import auth from "../services/authServices";
 import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
+import { connect } from "react-redux";
 
 
 class Tickers extends Component {
-  state = {
-    data: [],
-    tickers: null,
-    updateClass: "normal",
-    user: "",
-    loadingStatus: "Loading..."
-  };
-
-  //this function could be refactored
-  updateTickersRealTimeAnon = async (ticker) => {
-    this.setState({ updateClass : "normal" });
-    let tickers = [];
-    if (this.state.tickers) {
-      tickers = [...this.state.tickers];
-    }
-    
-    let matchIndex = tickers.findIndex(x => x.ticker === ticker.newTicker.ticker);
-    if (matchIndex === -1) {
-      tickers.push(ticker.newTicker);
-      this.setState({ tickers });
-    } else {
-      tickers[matchIndex] = ticker.newTicker;
-      this.state.tickers[matchIndex] = ticker.newTicker;
-      this.forceUpdate();
-    }
-    this.setState({ updateClass: "glow" });
-    this.setState({ loadingStatus: "" });
-  }
-
   //this function could be refactored
   updateTickersRealTime = async (ticker) => {
-    this.setState({ updateClass : "normal" });
-    let tickers = [...this.state.tickers];
+
+    let tickers = [...this.props.tickers];
     let matchIndex = tickers.findIndex(x => x.ticker === ticker.newTicker.ticker);
     tickers[matchIndex] = ticker.newTicker;
 
-    this.state.tickers[matchIndex] = ticker.newTicker;
-    this.forceUpdate();
-    this.setState({ updateClass: "glow" });
-    this.setState({ loadingStatus: "" });
+    this.props.dispatch({ type: "UPDATE_ONE_TICKER", newTicker: ticker.newTicker, matchIndex: matchIndex })
   }
 
   async componentDidMount() {  
     toast("Welcome to my demo of full MERN (React) stack app");
-
-
-    const user = auth.getCurrentUser();
-    await this.setState({ user });
-//    var intervalId = setInterval(this.getUpdateInterval, 4000);
-//    console.log(this.props);
-    if (user) this.getUpdateInterval(); 
-    else subscribeToTimerAnon(this.updateTickersRealTimeAnon);
-
+    //bug: this should be in parent 
+    let  user = auth.getCurrentUser();
+    if (user == null) {
+      user = { _id: "anon" }
+    }
+    this.props.dispatch({ type: "SET_USER", user })
+//    await this.setState({ user });
+    this.getUpdateInterval(user); 
   }
 
-   getUpdateInterval = async () => {
-    let tickers = await fetch("http://18.191.24.252:3900/api/tickers/update/" + this.state.user._id);
+   getUpdateInterval = async (user) => {
+    let tickers = "";
+    tickers = await fetch("http://18.221.49.186:3900/api/tickers/update/" + user._id);
+    console.log(tickers);
     tickers = await tickers.json();
-    this.setState({ tickers });
-    subscribeToTimer(this.updateTickersRealTime, this.state.user._id);
-    //    setTimeout(this.setState({updateClass: ''}), 1000);
-    
+    this.props.dispatch({ type: "SET_TICKERS", tickers  });
+    subscribeToTimer(this.updateTickersRealTime, user._id);
   }
 
 
   render() {
-    const { loadingStatus, user,  tickers, updateClass } = this.state;
+    const { user, tickers, updateClass, loadingStatus } = this.props;
     return (
       <React.Fragment>
         <div className="App">
@@ -119,4 +87,15 @@ class Tickers extends Component {
   }
 }
 
-export default Tickers;
+function mapStateToProps(state) {
+  return {
+    user: state.userReducer.user,
+    data: state.tickersReducer.data,
+    tickers: state.tickersReducer.tickers,
+    updateClass: state.tickersReducer.updateClass,
+    loadingStatus: state.tickersReducer.loadingStatus
+  };
+}
+
+
+export default connect(mapStateToProps)(Tickers);

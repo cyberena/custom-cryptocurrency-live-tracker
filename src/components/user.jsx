@@ -22,15 +22,6 @@ class Setup extends Form {
       .label("Name")
   };
 
-    // password: Joi.string()
-    //   .required()
-    //   .min(5)
-    //   .label("Password"),
-
-    // name: Joi.string()
-    //   .required()
-    //   .label("Name")
-
 
   doSubmit = async () => {
     alert("do submit");
@@ -55,17 +46,7 @@ class Setup extends Form {
 
   handleSubmitUpdateTicker = async (e) => {
     e.preventDefault();
-
-    // const data = { ...this.state.data };
-    // const { tickers } = this.state.data;
-    // console.log(data.tickers);
-    // let tickersUpdate = [];
-    // tickersUpdate["tickers"] = tickers.split(",");
-    // tickersUpdate["email"] = this.props.user.email; 
-    
-    // console.log(tickersUpdate);
-
-    http.post("http://18.191.24.252:3900/api/tickers", {updateTicker: this.state} );
+    http.post("http://18.221.49.186:3900/api/tickers", {updateTicker: this.state} );
   }
 
   onChangeTicker = ({ currentTarget: input }) => {

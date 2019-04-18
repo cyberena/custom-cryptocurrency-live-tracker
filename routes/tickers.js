@@ -14,8 +14,9 @@ router.get("/:id", async (req, res) => {
   res.send(tickers);
 });
 
+
 router.get("/update/:id", async (req, res) => {
-  const tickers = await Ticker.find({linkedID: req.params.id});
+  let tickers = await Ticker.find({linkedID: req.params.id});
   
   tickers.map(async t => {
     let result = await fetch("https://api.binance.com/api/v1/ticker/price?symbol=" + t.ticker.toUpperCase() + "BTC");

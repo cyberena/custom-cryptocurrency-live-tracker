@@ -6,11 +6,21 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import rootReducer from './reducers';
+
+const store = createStore(rootReducer);
+
+console.log(store.getState());
+
 
 ReactDOM.render(
+  <Provider store={store}>
   <BrowserRouter>
     <App />
-  </BrowserRouter>,
+  </BrowserRouter>
+  </Provider>,
   document.getElementById("root")
 );
 
