@@ -8,17 +8,11 @@ async function seed() {
   await mongoose.connect(config.get("db"));
   await Ticker.deleteMany({});
      let tickersArray = [];
-    let obj = "";
-    obj = new Ticker({ticker: 'xrp', price: 0, linkedID: "anon" });
-    tickersArray.push(obj);
-    obj = new Ticker({ticker: 'bnb', price: 0, linkedID: "anon" });
-    tickersArray.push(obj);
-    obj = new Ticker({ticker: 'ltc', price: 0, linkedID: "anon" });
-    tickersArray.push(obj);
-    obj = new Ticker({ticker: 'eth', price: 0, linkedID: "anon" });
-    tickersArray.push(obj);
-    obj = new Ticker({ticker: 'eos', price: 0, linkedID: "anon" });
-    tickersArray.push(obj);
+     tickersArray.push(new Ticker({ticker: 'xrp', price: 0, linkedID: "anon" }));
+     tickersArray.push(new Ticker({ticker: 'eos', price: 0, linkedID: "anon" }));
+     tickersArray.push(new Ticker({ticker: 'eth', price: 0, linkedID: "anon" }));
+     tickersArray.push(new Ticker({ticker: 'bnb', price: 0, linkedID: "anon" }));
+     tickersArray.push(new Ticker({ticker: 'ltc', price: 0, linkedID: "anon" }));
     await Ticker.insertMany(tickersArray);
     mongoose.disconnect();
 }
