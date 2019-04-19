@@ -1,7 +1,7 @@
 # custom-cryptocurrency-live-tracker
-Full MERN (React) stack customize cryptocurrency coin tracking application DEMO. Tickers 
+Full MERN (React/Redux) stack customize cryptocurrency coin tracking application DEMO. Tickers 
 are sent real time via socket io and will highlight when updated via state.
-This is an custom cryptocurrency tracking app created by me using full MERN (React/Redux) stack system.
+
 Features include:
 
 
@@ -15,5 +15,4 @@ Features include:
 - - API accepts update calls with user ID to find list of coins user has customized lookup from MongoDB
 - - API accepts update calls with NO user ID for anonymous dispalying of crypto coins handling demo
 - Mongoose for object data structures
-- Socket.IO subscription & disconnect handling for sending new ticker data real time
 - React/Redux used to update ticker & user states
