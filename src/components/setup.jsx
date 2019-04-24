@@ -68,7 +68,7 @@ class Setup extends Form {
   handleSubmitUpdateTicker = async (e) => {
     e.preventDefault();
 
-    await http.post("http://18.221.49.186:3900/api/tickers", {updateTicker: this.state} );
+    await http.post("http://18.191.24.252:3900/api/tickers", {updateTicker: this.state} );
     this.props.history.push('/');
   }
 

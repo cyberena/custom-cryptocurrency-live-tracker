@@ -1,5 +1,5 @@
 import openSocket from 'socket.io-client';
-const  socket = openSocket('http://18.221.49.186:3900');
+const  socket = openSocket('http://18.191.24.252:3900');
 
  async function subscribeToTimer(cb, userID) {
    console.log("sub timer");

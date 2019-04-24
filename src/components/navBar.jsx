@@ -25,7 +25,7 @@ const NavBar = ({ user }) => {
             About
         </NavLink>
 
-        {user && (
+        {(user._id != "anon") && (
             <React.Fragment>
               <span className="nav-item navbar-text pull-md-right navUser">
                 Welcome {user.name}
@@ -39,7 +39,7 @@ const NavBar = ({ user }) => {
 
             </React.Fragment>
           )}
-          {!user && (
+          {(user._id == "anon") && (
             <React.Fragment>
               <NavLink className="nav-item nav-link" to="/register">
                 Register
@@ -53,7 +53,7 @@ const NavBar = ({ user }) => {
 
             </React.Fragment>
           )}
-          {user && (
+          {(user._id != "anon") && (
               <NavLink className="nav-item nav-link navLogout" to="/logout">
               Logout
             </NavLink>

@@ -1,14 +1,20 @@
 import http from "./httpServices";
 
-const apiEndpoint = "http://18.221.49.186:3900/api/tickers/";
+const apiEndpoint = "http://18.191.24.252:3900/api/tickers/";
 
 export async function getAllTickers(userID) {
   return await http.get(apiEndpoint + userID);
 }
 
+export async function getAllArbitrage(userID) {
+  console.log(apiEndpoint + "arbitrage/" + userID);
+  return await http.get(apiEndpoint + "arbitrage/" + userID);
+}
+
 export async function updateTickers(userID) {
   return await http.get(apiEndpoint + "update/" + userID);
 }
+
 
 
 export default {

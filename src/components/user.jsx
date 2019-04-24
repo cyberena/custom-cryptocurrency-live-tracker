@@ -46,7 +46,7 @@ class Setup extends Form {
 
   handleSubmitUpdateTicker = async (e) => {
     e.preventDefault();
-    http.post("http://18.221.49.186:3900/api/tickers", {updateTicker: this.state} );
+    http.post("http://18.191.24.252:3900/api/tickers", {updateTicker: this.state} );
   }
 
   onChangeTicker = ({ currentTarget: input }) => {

@@ -1,6 +1,6 @@
 import http from "./httpServices";
 
-const apiEndpoint = "http://18.221.49.186:3900/api/users";
+const apiEndpoint = "http://18.191.24.252:3900/api/users";
 
 export function register(user) {
   return http.post(apiEndpoint, {

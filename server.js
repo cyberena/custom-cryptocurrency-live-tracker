@@ -19,7 +19,6 @@ server.listen(port, () =>
   winston.info(`Listening on port ${port}...`)
 );
 
-
 io.on('connection', (client) => {
   let socket = "";
   client.on('subscribeToTimer', async (userID) => {
@@ -27,7 +26,6 @@ io.on('connection', (client) => {
         //get tickers list from db
       let tickers = await Ticker.find({linkedID: userID});
       console.log(tickers);
-
       //get latest tickers from binance
       tickers.map(async t => {
         let result = await fetch("https://api.binance.com/api/v1/ticker/price?symbol=" + t.ticker.toUpperCase() + "BTC");

@@ -1,6 +1,7 @@
 import update from 'react-addons-update';
 
 const tickersInitialState = {
+    arbitrage: [],
     data: [],
     tickers: null,
     updateClass: "normal",
@@ -11,19 +12,23 @@ const tickersInitialState = {
 export default function tickersReducer(state = tickersInitialState, action) {
 console.log(action);
     switch (action.type) {
+      case "SET_ARBITRAGE":
+        return Object.assign({}, state, {
+          arbitrage: action.arbitrage
+        })
+      break;
       case "SET_TICKERS":
-        return {
+        return Object.assign({}, state, {
           tickers: action.tickers,
           updateClass: "normal"
-        };
-        case "UPDATE_CLASS":
-        return {
-            updateClass: action.updateClass
-        };
-        case "UPDATE_ONE_TICKER":
-    //this.setState({ updateClass: "glow" });
-    //this.setState({ loadingStatus: "" });
-
+        })
+      break;
+      case "UPDATE_CLASS":
+        return Object.assign({}, state, {
+          updateClass: action.updateClass
+        })
+      break;
+      case "UPDATE_ONE_TICKER":
         return update(state, {
             tickers: {
                 [action.matchIndex]: {$set: action.newTicker}
@@ -31,8 +36,10 @@ console.log(action);
             updateClass: { $set: "glow" }, 
             loadingStatus: { $set: "" }
         });
+      break;
       default:
         return state;
+      break;
     }
   }
   
